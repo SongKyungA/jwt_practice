@@ -1,4 +1,5 @@
-const express = require("express")
+const express = require('express')
+// const passport = require('passport')
 const path = require('path')
 const morgan = require('morgan')
 const session = require('express-session')
@@ -8,7 +9,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const v1 = require('./routes/v1')
-const indexRouter = require('./routes/index')
+const indexRouter = require('./routes/index.js')
 // const passportConfig = require('./passport')
 
 const app = express()
@@ -21,14 +22,13 @@ nunjucks.configure('views', {
 })
 
 app.use(morgan('dev'))
-// express.static은 로컬 내 폴더와 서버와 연결해서 파일을 제공해주는 코드
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: "elice Sns",
+    secret: "elice SNS",
     cookie: {
         httpOnly: true,
         secure: false

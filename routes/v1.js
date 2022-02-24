@@ -7,19 +7,13 @@ const router = express.Router()
 
 router.get('/token', async (req, res) => {
     try {
-        // payload 부분 설정
         const token = jwt.sign({
-            id: "내 SNS 사용자",
-            nick: "consumer88",
-            grade: "premium"
-        }, 
-        // verify signature에서 시크릿코드
-        // process.env.JWT_SECRET = mysnsservice
-        process.env.JWT_SECRET, {
-            // 유효한 시간
-            expiresIn: "60m",
-            // 발급한 사람
-            issure: "mySNS"
+            id: '내sns사용자',
+            nick: 'consumer88',
+            grade: 'premium'
+        }, process.env.JWT_SECRET, {
+            expiresIn: '60m',
+            issuer: 'mySNS'
         })
         req.session.jwt = token
         return res.json({
@@ -27,7 +21,7 @@ router.get('/token', async (req, res) => {
             message: '토큰이 발급되었습니다',
             token
         })
-    } catch(err) {
+    } catch (err) {
         console.error(err)
         return res.status(500).json({
             code: 500,
@@ -36,7 +30,7 @@ router.get('/token', async (req, res) => {
     }
 })
 
-router.get('/test', verifyToken, (req, res) => {
+router.get('/test', verifyToken, (req, res)=> {
     res.json(req.decoded)
 })
 
